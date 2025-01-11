@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lanchonete-configmap
+  namespace: lanchonete
+  labels:
+    app: cm-postgres
+data:
+  PG_HOST: "postgres-service"

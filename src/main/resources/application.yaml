@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: ${springProfile:local}
+  application:
+    name: lanchonete-api-pedido
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+server:
+  servlet:
+    context-path: /pedido
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+  namespace: lanchonete
+  labels:
+    app: cm-postgres
+data:
+  postgres-dbname: "lanchonete"
+  postgres_user: "lanchonete_user"
