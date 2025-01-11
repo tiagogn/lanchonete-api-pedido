@@ -1,7 +1,7 @@
 # Projeto da lanchonete pedidoGrupo 18 Pós-Tech - FIAP
 
 ![Java](https://img.shields.io/badge/Java-17-red)
-![SpringBoot](https://img.shields.io/badge/SpringBoot-3.1-green)
+![SpringBoot](https://img.shields.io/badge/SpringBoot-3.3-green)
 ![Docker](https://img.shields.io/badge/Docker-20.10-blue)
 ![Postgres](https://img.shields.io/badge/Postgres-16-blue)
 
@@ -54,7 +54,7 @@ ou execute o seguinte comando na pasta do projeto:
 Dentro do projeto, existe uma collection do Postman com os endpoints para teste.
 
 * Collection (lanchonete/pedido/Tech
-  Challenge.postman_collection.json) [Download](Tech%20Challenge.postman_collection.json)
+  Challenge.postman_collection.json) [Download](Fiap%20-%20Lanchonete%20-%20Pedido.postman_collection.json)
 * Environment (lanchonete/pedido/Tech
   Challenge.postman_environment.json) [Download](Tech%20Challenge.postman_environment.json)
 
