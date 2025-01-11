@@ -26,19 +26,6 @@ class PedidoController(
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido.toResponse())
     }
 
-    @PatchMapping("/{pedidoId}/preparacao")
-    fun pedidoEmPreparacao(
-        @PathVariable(required = true) pedidoId: UUID,
-    ): ResponseEntity<AtualizacaoPedidoStatusResponse> {
-        val pedido = pedidoService.enviandoPedidoParaCozinha(pedidoId)
-        val response = AtualizacaoPedidoStatusResponse(
-            pedidoId = pedido.id.toString(),
-            statusPedido = pedido.status,
-            mensagem = "Pedido enviado para cozinha"
-        )
-        return ResponseEntity.status(HttpStatus.OK).body(response)
-    }
-
     @PatchMapping("/{pedidoId}/pronto")
     fun pedidoPronto(
         @PathVariable(required = true) pedidoId: UUID,

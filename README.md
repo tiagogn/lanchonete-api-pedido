@@ -62,13 +62,12 @@ Em cada endpoint, existe um exemplo de requisição para teste.
 
 Ordem de execução dos endpoints:
 
-2. POST Cliente/Cadastrar Cliente(opcional)
-3. POST Pedido/Cadastrar Pedido
-4. POST Pedido/Recebe Pagamento
-5. PATCH Pedido/Pedido em Preparação
-6. PATCH Pedido/Pedido Pronto
-7. PATCH Pedido/Pedido Finalizado
-8. GET Pedido/Listar Pedido
+1. POST Cliente/Cadastrar Cliente(opcional)
+2. POST Pedido/Cadastrar Pedido
+3. POST Pedido/Recebe Pagamento
+4. PATCH Pedido/Pedido Pronto
+5. PATCH Pedido/Pedido Finalizado
+6. GET Pedido/Listar Pedido
 
 ## Kubernetes
 
