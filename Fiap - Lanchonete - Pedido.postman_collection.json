@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "1a8d8417-4941-4ea6-803b-bd4abb110f35",
+		"name": "Fiap - Lanchonete - Pedido",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17259405"
+	},
+	"item": [
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Cadastrar Pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"pedidoId\", pm.response.json().id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clienteId\":\"\",\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": \"272a6b0f-6681-44f5-9c4f-c433d8ad2620\",\r\n            \"nomeProduto\": \"X-Egg\",\r\n            \"quantidade\": 1,\r\n            \"precoUnitario\": 31.00,\r\n            \"categoria\": \"LANCHE\"\r\n        },\r\n        {\r\n            \"produtoId\": \"e240f195-05fb-4a90-b94b-e2da8bd53918\",\r\n            \"nomeProduto\": \"Coca-Cola\",\r\n            \"quantidade\": 1,\r\n            \"precoUnitario\": 10.00,\r\n            \"categoria\": \"BEBIDA\"\r\n        },\r\n        {\r\n            \"produtoId\": \"bad3046b-6929-41fa-8a2c-d7ec748fde4a\",\r\n            \"nomeProduto\": \"Batata Frita\",\r\n            \"quantidade\": 2,\r\n            \"precoUnitario\": 15.00,\r\n            \"categoria\": \"ACOMPANHAMENTO\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedido em Preparação",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"novoStatus\": \"PRONTO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos/:pedidoId/preparacao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos",
+								":pedidoId",
+								"preparacao"
+							],
+							"variable": [
+								{
+									"key": "pedidoId",
+									"value": "{{pedidoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedido Pronto",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"novoStatus\": \"PRONTO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos/:pedidoId/pronto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos",
+								":pedidoId",
+								"pronto"
+							],
+							"variable": [
+								{
+									"key": "pedidoId",
+									"value": "{{pedidoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedido Finalizado",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"novoStatus\": \"PRONTO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos/:pedidoId/finalizado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos",
+								":pedidoId",
+								"finalizado"
+							],
+							"variable": [
+								{
+									"key": "pedidoId",
+									"value": "{{pedidoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Historico Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos/:pedidoId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos",
+								":pedidoId"
+							],
+							"variable": [
+								{
+									"key": "pedidoId",
+									"value": "{{pedidoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Status Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos/:pedidoId/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos",
+								":pedidoId",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "pedidoId",
+									"value": "{{pedidoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook Pagamento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"pedidoId\", pm.response.json().id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pedidoId\": \"{{pedidoId}}\",\r\n    \"valor\": 71,\r\n    \"formaPagamento\": \"PIX\",\r\n    \"status\": \"APROVADO\",\r\n    \"pagamentoId\": \"{{$guid}}\",\r\n    \"dataPagamento\": \"2025-01-09T12:01:00\",\r\n    \"mensagem\": \"{{$randomAlphaNumeric}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/pedidos/pagamento/:pedidoId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"pedidos",
+								"pagamento",
+								":pedidoId"
+							],
+							"variable": [
+								{
+									"key": "pedidoId",
+									"value": "{{pedidoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Buscar Cliente",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/clientes/cpf/:cpf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"clientes",
+								"cpf",
+								":cpf"
+							],
+							"variable": [
+								{
+									"key": "cpf",
+									"value": "12345678901"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Tiago Gonçalves\",\r\n  \"cpf\": \"29696814801\",\r\n  \"email\": \"tiago@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedido/v1/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"v1",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedido/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedido",
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
