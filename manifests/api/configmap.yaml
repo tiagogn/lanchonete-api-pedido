@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: lanchonete-configmap
-  namespace: lanchonete
+  name: lanchonete-pedido-configmap
+  namespace: lanchonete-pedido
   labels:
     app: cm-postgres
 data:

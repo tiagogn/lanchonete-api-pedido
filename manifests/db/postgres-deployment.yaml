@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-deployment
-  namespace: lanchonete
+  namespace: lanchonete-pedido
   labels:
     app: ds-postgres
 spec:

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lanchonete-deployment
-  namespace: lanchonete
+  name: lanchonete-pedido-deployment
+  namespace: lanchonete-pedido
   labels:
-    app: ds-lanchonete
+    app: ds-lanchonete-pedido
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ds-lanchonete
+      app: ds-lanchonete-pedido
   template:
     metadata:
       labels:
-        app: ds-lanchonete
+        app: ds-lanchonete-pedido
     spec:
       containers:
-        - name: lanchonete
-          image: tiagogn/lanchonete:1.0
+        - name: lanchonete-pedido
+          image: edureef42/lanchonete-pedido:1.0
           ports:
             - containerPort: 8080
           resources:
@@ -33,7 +33,7 @@ spec:
             - name: PG_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: lanchonete-configmap
+                  name: lanchonete-pedido-configmap
                   key: PG_HOST
             - name: POSTGRES_USER
               valueFrom:
@@ -46,16 +46,16 @@ spec:
                   name: postgres-secret
                   key: password
             - name: POSTGRES_DB
-              value: "lanchonete"
+              value: "lanchonete-pedido"
           readinessProbe:
             httpGet:
-              path: /lanchonete/actuator/health
+              path: /lanchonete-pedido/actuator/health
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /lanchonete/actuator/health
+              path: /lanchonete-pedido/actuator/health
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 20
