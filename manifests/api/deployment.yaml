@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: lanchonete-pedido
-          image: edureef42/lanchonete-pedido:1.0
+          image: edureef42/lanchonete-pedido:1.2
           ports:
             - containerPort: 8080
           resources:

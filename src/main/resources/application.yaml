@@ -5,6 +5,9 @@ spring:
     name: lanchonete-api-pedido
   datasource:
     driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/lanchonete_pedido  # Substituindo localhost por postgres-service
+    username: lanchonete_pedido_user
+    password: lanchonete_pedido_password
   flyway:
     enabled: true
 server:
@@ -18,4 +21,6 @@ management:
   endpoint:
     health:
       show-details: always
+
+
 
