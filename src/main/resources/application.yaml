@@ -12,7 +12,7 @@ spring:
     enabled: true
 server:
   servlet:
-    context-path: /pedido
+    context-path: /lanchonete-pedido
 management:
   endpoints:
     web:
