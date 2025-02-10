@@ -4,6 +4,8 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.25'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
+	id "org.sonarqube" version "6.0.1.5171"
 }
 
 group = 'br.com.fiap.lanchonete'
@@ -40,6 +42,9 @@ dependencies {
 	implementation "org.springdoc:springdoc-openapi-starter-common:${springdocVersion}"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+	testImplementation("com.ninja-squad:springmockk:4.0.2") {
+		exclude module: 'mockito-core'
+	}
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -51,4 +56,51 @@ kotlin {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jacocoTestReport {
+	reports {
+		xml.required.set(true)
+		csv.required.set(true)
+		html.required.set(true)
+	}
+
+	classDirectories.setFrom(files(classDirectories.files.collect {
+		fileTree(dir: it, exclude: [
+				'**/br/com/fiap/lanchonete/pedido/adapters/config/**',
+				'**/br/com/fiap/lanchonete/pedido/adapters/input/rest/ErrorController.class',
+				'**/br/com/fiap/lanchonete/pedido/core/application/dto/**',
+				'**/br/com/fiap/lanchonete/pedido/PedidoApplication.class'])
+
+	}))
+}
+
+sonar {
+	properties {
+		property "sonar.projectKey", "tiagogn_lanchonete-api-pedido"
+		property "sonar.organization", "fiap-lanchonete-soat8"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.exclusions", "**/build/**," +
+				"**/test/**,**/src/test/**," +
+				"**/src/main/resources/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/config/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/input/rest/request/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/input/rest/response/**," +
+				"src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/input/rest/ErrorController.kt," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/output/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/dto/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/ports/**," +
+				"**/PedidoApplication*"
+		property "sonar.coverage.exclusions", "**/build/**," +
+				"**/test/**,**/src/test/**," +
+				"**/src/main/resources/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/config/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/input/rest/request/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/input/rest/response/**," +
+				"src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/input/rest/ErrorController.kt," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/output/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/dto/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/ports/**," +
+				"**/PedidoApplication*"
+	}
 }
