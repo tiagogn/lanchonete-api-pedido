@@ -71,7 +71,8 @@ class PedidoController(
             criadoEm = pedido.criadoEm,
             atualizadoEm = pedido.atualizadoEm,
             tempoEspera = pedido.tempoEspera(),
-            codigo = pedido.codigo!!
+            codigo = pedido.codigo!!,
+            pagamento = pedido.pagamento.status.name
         )
     }
 

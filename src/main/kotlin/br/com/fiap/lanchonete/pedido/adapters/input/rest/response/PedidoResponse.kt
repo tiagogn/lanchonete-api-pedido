@@ -16,7 +16,8 @@ data class PedidoResponse(
     val criadoEm: LocalDateTime,
     val atualizadoEm: LocalDateTime,
     val tempoEspera: String,
-    val codigo: Long
+    val codigo: Long,
+    val pagamento: String
 )
 
 data class ItemPedidoResponse(
@@ -42,7 +43,8 @@ fun Pedido.toResponse(): PedidoResponse {
         criadoEm = this.criadoEm,
         atualizadoEm = this.atualizadoEm,
         tempoEspera = this.tempoEspera(),
-        codigo = this.codigo!!
+        codigo = this.codigo!!,
+        pagamento = this.pagamento.status.name
     )
 }
 
