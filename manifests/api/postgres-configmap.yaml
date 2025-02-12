@@ -6,5 +6,5 @@ metadata:
   labels:
     app: cm-postgres
 data:
-  postgres-dbname: "lanchonete_pedido"
+  postgres_db: "lanchonetepedido"
   postgres_user: "lanchonete_pedido_user"

@@ -6,4 +6,4 @@ metadata:
   labels:
     app: cm-postgres
 data:
-  PG_HOST: "postgres-service"
+  PG_HOST: "terraform-20250211234040680300000003.czu4isocm08k.us-east-1.rds.amazonaws.com"
