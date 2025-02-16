@@ -1,14 +1,17 @@
 package br.com.fiap.lanchonete.pedido.adapters.input.rest
 
+import br.com.fiap.lanchonete.pedido.adapters.input.rest.request.ItemPedidoRequest
 import br.com.fiap.lanchonete.pedido.adapters.input.rest.request.PedidoPagamentoRequest
 import br.com.fiap.lanchonete.pedido.adapters.input.rest.request.PedidoRequest
+import br.com.fiap.lanchonete.pedido.core.application.dto.PedidoOutput
+import br.com.fiap.lanchonete.pedido.core.application.dto.PedidoStatusOutput
 import br.com.fiap.lanchonete.pedido.core.application.ports.input.PedidoService
-import br.com.fiap.lanchonete.pedido.core.domain.Pedido
-import br.com.fiap.lanchonete.pedido.core.domain.ItemPedido
-import br.com.fiap.lanchonete.pedido.core.domain.StatusPedido
-import br.com.fiap.lanchonete.pedido.core.domain.Pagamento
-import br.com.fiap.lanchonete.pedido.core.domain.StatusPagamento
 import br.com.fiap.lanchonete.pedido.core.application.exceptions.PedidoException
+import br.com.fiap.lanchonete.pedido.core.domain.ItemPedido
+import br.com.fiap.lanchonete.pedido.core.domain.Pagamento
+import br.com.fiap.lanchonete.pedido.core.domain.Pedido
+import br.com.fiap.lanchonete.pedido.core.domain.StatusPagamento
+import br.com.fiap.lanchonete.pedido.core.domain.StatusPedido
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -18,11 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
@@ -37,6 +37,7 @@ class PedidoControllerTest(@Autowired private val mockMvc: MockMvc) {
     private lateinit var pedido: Pedido
     private lateinit var pedidoRequest: PedidoRequest
     private lateinit var pedidoPagamentoRequest: PedidoPagamentoRequest
+    private lateinit var pedidoOutput: PedidoOutput
     private val pedidoId = UUID.randomUUID()
 
     @BeforeEach
@@ -63,7 +64,15 @@ class PedidoControllerTest(@Autowired private val mockMvc: MockMvc) {
 
         pedidoRequest = PedidoRequest(
             clienteId = UUID.randomUUID(),
-            itens = listOf()
+            itens = listOf(
+                ItemPedidoRequest(
+                    produtoId = UUID.randomUUID(),
+                    nomeProduto = "X-Burger",
+                    quantidade = 1,
+                    precoUnitario = BigDecimal(15.00),
+                    categoria = "Lanche"
+                )
+            )
         )
 
         pedidoPagamentoRequest = PedidoPagamentoRequest(
@@ -74,6 +83,15 @@ class PedidoControllerTest(@Autowired private val mockMvc: MockMvc) {
             pagamentoId = UUID.randomUUID(),
             dataPagamento = LocalDateTime.now().toString(),
             mensagem = "Pagamento realizado com sucesso"
+        )
+
+        pedidoOutput = PedidoOutput(
+            id = pedidoId.toString(),
+            codigo = 1234,
+            valor = BigDecimal(20.00),
+            status = StatusPedido.RECEBIDO.name,
+            criadoEm = LocalDateTime.now(),
+            clienteId = UUID.randomUUID().toString()
         )
     }
 
@@ -127,6 +145,7 @@ class PedidoControllerTest(@Autowired private val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(pedidoId.toString()))
             .andExpect(jsonPath("$.total").value(20.00))
+            .andExpect(jsonPath("$.pagamento").value(pedido.pagamento.status.name))
     }
 
     @Test
@@ -140,6 +159,7 @@ class PedidoControllerTest(@Autowired private val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.codigo").value(1234))
             .andExpect(jsonPath("$.status").value(pedido.status.name))
+            .andExpect(jsonPath("$.pagamento").value(pedido.pagamento.status.name))
     }
 
     @Test
@@ -165,5 +185,24 @@ class PedidoControllerTest(@Autowired private val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.pedidoId").value(pedidoId.toString()))
             .andExpect(jsonPath("$.status").value(StatusPedido.EM_PREPARACAO.name))
+    }
+
+    @Test
+    fun `should return list of grouped orders`() {
+        val pedidosAgrupados = listOf(
+            PedidoStatusOutput(
+                status = "RECEBIDO",
+                pedidos = listOf(pedidoOutput)
+            )
+        )
+        every { pedidoService.listarPedidosAgrupadosPorStatus() } returns pedidosAgrupados
+
+        mockMvc.perform(
+            get("/v1/pedidos")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$[0].status").value(StatusPedido.RECEBIDO.name))
+            .andExpect(jsonPath("$[0].pedidos[0].id").value(pedidoId.toString()))
     }
 }

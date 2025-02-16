@@ -7,6 +7,7 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class PedidoTest {
 
@@ -138,5 +139,62 @@ class PedidoTest {
         val tempoEspera = pedido.tempoEspera()
 
         assertEquals("0 minutos", tempoEspera)
+    }
+
+    @Test
+    fun `should return tempoEspera in minutes when pedido is pronto and calculated time is positive`() {
+        val cliente = Cliente(UUID.randomUUID(), "John", "john@example.com", "123.456.789-00")
+        val pagamento =
+            Pagamento(valorPago = BigDecimal(50), status = StatusPagamento.APROVADO, formaPagamento = "Cartão")
+        val itens =
+            listOf(ItemPedido(UUID.randomUUID(), UUID.randomUUID(), "Produto A", 2, BigDecimal(10), "Categoria 1"))
+        val pedido = Pedido(cliente = cliente, itens = itens, pagamento = pagamento, total = BigDecimal(50))
+
+        pedido.pedidoEmPreparacao()
+        Thread.sleep(1000)
+        pedido.pedidoPronto()
+
+        val tempoEspera = pedido.tempoEspera()
+
+        assertTrue(tempoEspera.contains("minutos"))
+    }
+
+    @Test
+    fun `should throw PedidoException when pedidoEmPreparacao is called with already emPreparacao status`() {
+        val cliente = Cliente(UUID.randomUUID(), "John", "john@example.com", "123.456.789-00")
+        val pagamento =
+            Pagamento(valorPago = BigDecimal(50), status = StatusPagamento.APROVADO, formaPagamento = "Cartão")
+        val itens =
+            listOf(ItemPedido(UUID.randomUUID(), UUID.randomUUID(), "Produto A", 2, BigDecimal(10), "Categoria 1"))
+        val pedido = Pedido(cliente = cliente, itens = itens, pagamento = pagamento, total = BigDecimal(50))
+
+        pedido.pedidoEmPreparacao()
+
+        val exception = assertFailsWith<PedidoException> {
+            pedido.pedidoEmPreparacao()
+        }
+
+        assertEquals("Pedido não pode ser preparado, pois já está em preparação", exception.message)
+    }
+
+    @Test
+    fun `should not throw exception when pedidoPronto is called with already pronto status`() {
+        val cliente = Cliente(UUID.randomUUID(), "John", "john@example.com", "123.456.789-00")
+        val pagamento =
+            Pagamento(valorPago = BigDecimal(50), status = StatusPagamento.APROVADO, formaPagamento = "Cartão")
+        val itens =
+            listOf(ItemPedido(UUID.randomUUID(), UUID.randomUUID(), "Produto A", 2, BigDecimal(10), "Categoria 1"))
+        val pedido = Pedido(
+            cliente = cliente,
+            itens = itens,
+            pagamento = pagamento,
+            total = BigDecimal(50),
+            status = StatusPedido.RECEBIDO
+        )
+
+        pedido.pedidoEmPreparacao()
+        pedido.pedidoPronto()
+
+        assertEquals(StatusPedido.PRONTO, pedido.status)
     }
 }

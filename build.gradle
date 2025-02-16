@@ -90,6 +90,8 @@ sonar {
 				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/output/**," +
 				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/dto/**," +
 				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/ports/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/exceptions/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/services/exceptions**,"
 				"**/PedidoApplication*"
 		property "sonar.coverage.exclusions", "**/build/**," +
 				"**/test/**,**/src/test/**," +
@@ -101,6 +103,8 @@ sonar {
 				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/adapters/output/**," +
 				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/dto/**," +
 				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/ports/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/exceptions/**," +
+				"**/src/main/kotlin/br/com/fiap/lanchonete/pedido/core/application/services/exceptions**,"
 				"**/PedidoApplication*"
 	}
 }
