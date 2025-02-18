@@ -24,7 +24,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: postgres-configmap
-                  key: postgres-dbname
+                  key: postgres_db
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
